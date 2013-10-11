@@ -2,3 +2,4 @@ studgrant/local_settings.py
 studgrant/private_settings.py
 *.db
 *.pyc
+.idea
