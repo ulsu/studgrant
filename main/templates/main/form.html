@@ -1,2 +1,107 @@
 {% extends "base.html" %}
-{% block content %}АЗАЗА{% endblock %}
+{% block content %}
+    <form method="post" action="/index.php?r=site/create" id="forms-form" enctype="multipart/form-data" class="MultiFile-intercepted">
+        <p style="color: #5F6264; font: 12px 'segoe',sans-serif;"><span style="color:red;">Внимание!</span>
+            Все поля обязательны для заполнения.</p>
+        <div class="left-col">
+            <h3>Данные об исполнителе</h3>
+
+            <div class="row">
+                {{ account.user_fio }}		<span class="error_text"></span>
+            </div>
+            <div class="row">
+                {{ account.user_date }}		<span class="error_text"></span>
+            </div>
+            <div class="row">
+                {{ account.user_address }}		<span class="error_text"></span>
+            </div>
+            <div class="row">
+                {{ account.user_home_phone }}		<span class="error_text"></span>
+            </div>
+            <div class="row">
+                {{ account.user_mobile_phone }}		<span class="error_text"></span>
+            </div>
+            <div class="row">
+                {{ account.user_mail }}		<span class="error_text"></span>
+            </div>
+
+            <h4>Место учебы</h4>
+
+            <div class="row">
+                {{ account.user_faculty }}		<span class="error_text"></span>
+            </div>
+
+            <div class="row">
+                {{ account.user_specialty }}		<span class="error_text"></span>
+            </div>
+
+            <div class="row">
+                {{ account.user_group }}		<span class="error_text"></span>
+            </div>
+
+            <div class="row">
+                {{ account.user_education_form }}		<span class="error_text"></span>
+            </div>
+
+            <div class="row">
+                {{ account.user_course }}		<span class="error_text"></span>
+            </div>
+            <h4>Область научных интересов</h4>
+            <div class="row">
+                {{ account.science_area }}
+                <span class="error_text"></span>
+            </div>
+            <h4>Поддержка проектов заявителя в форме грантов</h4>
+            <div class="row">
+                {{ account.project_support }}
+                <span class="error_text"></span>
+            </div>
+
+            <h4>Участие в научно-исследовательской работе</h4>
+            <div class="row">
+                {{ account.research }}
+                <span class="error_text"></span>
+            </div>
+        </div>
+        <div class="right-col">
+            <h3>Данные о научном руководителе</h3>
+            <div class="row">
+                {{ account.supervisor_fio }}		<span class="error_text"></span>
+            </div>
+
+            <div class="row">
+                {{ account.contact_info }}
+                <span class="error_text"></span>
+            </div>
+            <h4>Место работы</h4>
+            <div class="row">
+                {{ account.supervisor_faculty }}		<span class="error_text"></span>
+            </div>
+
+            <div class="row">
+                {{ account.supervisor_insitute }}		<span class="error_text"></span>
+            </div>
+
+            <div class="row">
+                {{ account.supervisor_kafedra }}		<span class="error_text"></span>
+            </div>
+            <h4>Область научных интересов</h4>
+            <div class="row">
+                {{ account.supervisor_science_area }}
+                <span class="error_text"></span>
+            </div>
+
+            <div class="row">
+                {{ account.publication_count }}		<span class="error_text"></span>
+            </div>
+
+            <div style="text-align:left;" class="row">
+                <h4>Наличие выполняемых научно-исследовательских работ в рамках грантов, хоз. договоров&nbsp;&nbsp;
+                    {{ account.supervisor_achivements }}			<span class="error_text"></span>
+                </h4>
+            </div>
+
+
+        </div>
+        <div class="clear"></div>
+{% endblock %}
