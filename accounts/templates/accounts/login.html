@@ -1,9 +1,34 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block css %}
+<style>
+    .form_field{
+        clear:both;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-form">
+    <h1>Авторизация</h1>
+    <div class="form">
+        <form action="/accounts/login/?next={{ next }}" method="POST">
+            {% csrf_token %}
+            <div class="row">
+                {{ form.username }}
+            </div>
+            <div class="row">
+                {{ form.password }}
+            </div>
+
+            <div class="row rememberMe">
+                {{ form.remember_me }} {{ form.remember_me.label }}
+            </div>
+            <div class="row buttons">
+                <input type="submit" value="Войти">
+                <a href="/accounts/register/"><div class="botton-to-register">Зарегистрироваться</div></a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
