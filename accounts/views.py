@@ -35,4 +35,23 @@ def logout(request):
     return HttpResponseRedirect('/')
 
 def register(request):
-    pass
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = User.objects.create(username=form.cleaned_data['username'], email=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            if user is not None and user.is_active:
+                if not request.POST.get('remember_me', None):
+                    request.session.set_expiry(0)
+                auth.login(request, user)
+            go_next = request.GET['next'] if 'next' in request.GET else '/'
+            return HttpResponseRedirect(request.GET['next'])
+    else:
+        if request.user.is_authenticated():
+            return HttpResponseRedirect('/')
+
+        form = RegisterForm()
+
+    return render(request, 'accounts/register.html', {
+        'form': form,
+        'next': request.GET['next'] if 'next' in request.GET else '/',
+        })
