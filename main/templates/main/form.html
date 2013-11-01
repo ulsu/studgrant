@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+{% block js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}dynamic_formset/js/jquery.formset.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}dynamic_formset/js/jquery-1.3.2.min.js"></script>
+    <link href="{{ STATIC_URL }}dynamic_formset/css/default.css" rel="stylesheet">
+{% endblock %}
 {% block content %}
     <form method="post" action="/index.php?r=site/create" id="forms-form" enctype="multipart/form-data" class="MultiFile-intercepted">
         <p style="color: #5F6264; font: 12px 'segoe',sans-serif;"><span style="color:red;">Внимание!</span>
@@ -100,8 +105,96 @@
                     {{ account.supervisor_achivements }}			<span class="error_text"></span>
                 </h4>
             </div>
+        </div>
+        <div class="clear"></div>
+        <div class="center-col">
+            <h4>Список публикаций </h4>
+
+            <div class="row">
+                {{ account.publication_list }}		        <span class="error_text"></span>
+                <p style="color: #5F6264; font: 12px 'segoe',sans-serif;"><i>Приводимую информацию нужно подтвердить ксерокопиями соответствующих документов, прикрепив необходимые файлы в любом из следующих форматов: rtf, pdf, doc, jpg. Название файла не должно содержать русских букв, пробелов и спецсимволов. Размер каждого файла &ndash; не более 2Мб.</i></p>
+                <input type="hidden" name="Files[perf_publlist_files][]" value="" id="ytFiles_perf_publlist_files"><div id="Files_perf_publlist_files_wrap" class="MultiFile-wrap"><input type="file" id="Files_perf_publlist_files_F2" name="Files[perf_publlist_files][]" accept="png|gif|jpg|doc|docx|pdf|djvu|rtf|odt" class="multi MultiFile-applied MultiFile"><div id="Files_perf_publlist_files_wrap_list" class="MultiFile-list"></div></div>
+            </div>
+
+            <h4>Наличие наград, дипломов, результаты участия в конкурсах студенческих работ, олимпиадах, конференциях</h4>
+
+            <div class="row">
+                {{ account.achivements }}                   <span class="error_text"></span>
+                <p style="color: #5F6264; font: 12px 'segoe',sans-serif;"><i>Приводимую информацию нужно подтвердить ксерокопиями соответствующих документов, прикрепив необходимые файлы в любом из следующих форматов: rtf, pdf, doc, jpg. Название файла не должно содержать русских букв, пробелов и спецсимволов. Размер каждого файла &ndash; не более 2Мб.</i></p>
+                <input type="hidden" name="Files[perf_diploms_files][]" value="" id="ytFiles_perf_diploms_files"><div id="Files_perf_diploms_files_wrap" class="MultiFile-wrap"><input type="file" id="Files_perf_diploms_files" name="Files[perf_diploms_files][]" accept="png|gif|jpg|doc|docx|pdf|djvu|rtf|odt" class="multi MultiFile-applied"><div id="Files_perf_diploms_files_wrap_list" class="MultiFile-list"></div></div>
+            </div>
+
+            <h3>Научный проект</h3>
+            <h4>Название проекта</h4>
+            <div class="row">
+                {{ account.project_name }}                <span class="error_text"></span>
+            </div>
+
+            <h4>Направление конкурса (в соответствии с объявленными номинациями)</h4>
+            <div class="row">
+                {{ account.direction }}                <span class="error_text"></span>
+            </div>
+
+            <h4>Научная проблема, на решение которой направлен проект, ее актуальность, фундаментальная и практическая ценность. Место планируемых работ в обозначенной тематике </h4>
+            <div class="row">
+                {{ account.perf_problem }}                <span class="error_text"></span>
+            </div>
+
+            <h4>Современное состояние исследований в данной области науки</h4>
+            <div class="row">
+                {{ account.stat_of_research }}                <span class="error_text"></span>
+            </div>
+
+            <h4>Имеющийся у исполнителя научный задел по предлагаемому проекту: полученные ранее результаты (с оценкой степени оригинальности), разработанные методы (с оценкой степени новизны)</h4>
+            <div class="row">
+                {{ account.perf_zadel }}                <span class="error_text"></span>
+            </div>
+
+            <h4>Краткая аннотация (не более 0,5 стр.)</h4>
+            <div class="row">
+                {{ account.shot_annotation }}                <span class="error_text"></span>
+            </div>
+
+            <h4>Цели и задачи реализации проекта</h4>
+            <div class="row">
+                {{ account.goals_and_objectives }}
+                <span class="error_text"></span>
+            </div>
+
+            <h4>Предлагаемые методы и подходы (с оценкой степени новизны)</h4>
+            <div class="row">
+                {{ account.proposed_methods }}                <span class="error_text"></span>
+            </div>
+            <h4>Подробный план работ на весь срок выполнения проекта, включая участие в научных мероприятиях</h4>
+
+            <div class="formTable">
+                <table class="planList">
+                    <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Сроки проведения</th>
+                        <th>Содержание работ</th>
+                        <th>Место проведения</th>
+                    </tr>
+                    </thead>
+                    <tbody id="events">
+                    {% for form in plan_formset.forms %}
+                    <tr id="row0">
+                        <td class="center">{{ form.id }}</td>
+                        <td>{{ form.dates }}</td>
+                        <td>{{ form.content }}</td>
+                        <td>{{ form.place }}</td>
+                    </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
 
 
         </div>
-        <div class="clear"></div>
+    {% csrf_token %}
+    <button type="submit" formaction="/send/">Отправить</button>
+    </form>
+
 {% endblock %}

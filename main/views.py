@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from models import *
 from forms import *
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 
 @login_required
 def main(request):
@@ -11,7 +12,33 @@ def main(request):
 
 
 def show_form(request):
-    account = AccountForm()
+    try:
+        account = Account.objects.get(user=request.user)
+    except:
+        form = AccountForm()
+        plan_formset = PlanFormSet()
+    else:
+        form = AccountForm(instance=account)
+        plan_formset = PlanFormSet(instance=account)
+
     t = loader.get_template("main/form.html")
-    c = RequestContext(request, {'account': account})
+    c = RequestContext(request, {'account': form, 'plan_formset': plan_formset})
     return HttpResponse(t.render(c))
+
+
+def save(request):
+    if request.method == 'POST':
+        try:
+            account = Account.objects.get(user=request.user)
+        except:
+            account_form = AccountForm(request.POST)
+            if account_form.is_valid():
+                account = account_form.save(commit=False)
+                account.user = request.user
+                account.save()
+        else:
+            account_form = AccountForm(request.POST, instance=account)
+            if account_form.is_valid():
+                account_form.save()
+    return redirect('/')
+
