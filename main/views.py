@@ -12,19 +12,11 @@ def main(request):
 
 
 def show_form(request):
-
-    try:
-        account = Account.objects.get(user=request.user)
-    except:
-        form = AccountForm()
-        plan_formset = PlanFormSet()
-        pub_formset = PubFormSet()
-        dip_formset = DipFormSet()
-    else:
-        form = AccountForm(instance=account)
-        plan_formset = PlanFormSet(instance=account)
-        pub_formset = PubFormSet(instance=account)
-        dip_formset = DipFormSet(instance=account)
+    account, created = Account.objects.get_or_create(user=request.user)
+    form = AccountForm(instance=account)
+    plan_formset = PlanFormSet(instance=account)
+    pub_formset = PubFormSet(instance=account)
+    dip_formset = DipFormSet(instance=account)
 
     t = loader.get_template("main/form.html")
     c = RequestContext(request, {
@@ -38,17 +30,13 @@ def show_form(request):
 
 def save(request):
     if request.method == 'POST':
-        try:
-            account = Account.objects.get(user=request.user)
-        except:
-            account_form = AccountForm(request.POST)
-            if account_form.is_valid():
-                account = account_form.save(commit=False)
-                account.user = request.user
-                account.save()
-        else:
-            account_form = AccountForm(request.POST, instance=account)
-            if account_form.is_valid():
-                account_form.save()
+        account, created = Account.objects.get_or_create(user=request.user)
+        account_form = AccountForm(request.POST, instance=account)
+        if account_form.is_valid():
+            account = account_form.save()
+
+        plan_formset = PlanFormSet(request.POST, instance=account)
+        if plan_formset.is_valid():
+            plan_formset.save()
     return redirect('/')
 
