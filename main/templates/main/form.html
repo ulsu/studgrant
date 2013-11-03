@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 {% block js %}
-    <script type="text/javascript" src="{{ STATIC_URL }}dynamic_formset/js/jquery.formset.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}dynamic_formset/js/jquery-1.3.2.min.js"></script>
-    <link href="{{ STATIC_URL }}dynamic_formset/css/default.css" rel="stylesheet">
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.formset.js"></script>
+    <script>
+        $(function(){
+            $("#plan_formset").formset();
+        });
+    </script>
 {% endblock %}
 {% block content %}
-    <form method="post" action="/index.php?r=site/create" id="forms-form" enctype="multipart/form-data" class="MultiFile-intercepted">
+    <form method="post" action="/send/" id="forms-form" enctype="multipart/form-data" class="MultiFile-intercepted">
         <p style="color: #5F6264; font: 12px 'segoe',sans-serif;"><span style="color:red;">Внимание!</span>
             Все поля обязательны для заполнения.</p>
         <div class="left-col">
@@ -167,28 +170,30 @@
             </div>
             <h4>Подробный план работ на весь срок выполнения проекта, включая участие в научных мероприятиях</h4>
 
-            <div class="formTable">
+            <div id="plan_formset" class="formTable" data-formset-prefix="{{ plan_formset.prefix }}">
+                {{ plan_formset.management_form }}
                 <table class="planList">
                     <thead>
-                    <tr>
-                        <th>№</th>
-                        <th>Сроки проведения</th>
-                        <th>Содержание работ</th>
-                        <th>Место проведения</th>
-                    </tr>
+                        <tr>
+                            <th>№</th>
+                            <th>Сроки проведения</th>
+                            <th>Содержание работ</th>
+                            <th>Место проведения</th>
+                            <th></th>
+                        </tr>
                     </thead>
-                    <tbody id="events">
+                    <tbody data-formset-body>
                     {% for form in plan_formset.forms %}
-                    <tr id="row0">
-                        <td class="center">{{ form.id }}</td>
-                        <td>{{ form.dates }}</td>
-                        <td>{{ form.content }}</td>
-                        <td>{{ form.place }}</td>
-                    </tr>
+                        {% include 'main/table_formset_item.html' %}
                     {% endfor %}
-
                     </tbody>
                 </table>
+                <script type="form-template" data-formset-empty-form>
+                    {% with form=plan_formset.empty_form %}
+                        {% include 'main/table_formset_item.html' %}
+                    {% endwith %}
+                </script>
+                <input type="button" value="Add another" data-formset-add>
             </div>
 
 
@@ -196,5 +201,12 @@
     {% csrf_token %}
     <button type="submit" formaction="/send/">Отправить</button>
     </form>
+
+
+
+
+
+
+
 
 {% endblock %}
