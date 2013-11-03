@@ -12,17 +12,27 @@ def main(request):
 
 
 def show_form(request):
+
     try:
         account = Account.objects.get(user=request.user)
     except:
         form = AccountForm()
         plan_formset = PlanFormSet()
+        pub_formset = PubFormSet()
+        dip_formset = DipFormSet()
     else:
         form = AccountForm(instance=account)
         plan_formset = PlanFormSet(instance=account)
+        pub_formset = PubFormSet(instance=account)
+        dip_formset = DipFormSet(instance=account)
 
     t = loader.get_template("main/form.html")
-    c = RequestContext(request, {'account': form, 'plan_formset': plan_formset})
+    c = RequestContext(request, {
+        'account': form,
+        'plan_formset': plan_formset,
+        'pub_formset': pub_formset,
+        'dip_formset': dip_formset,
+    })
     return HttpResponse(t.render(c))
 
 

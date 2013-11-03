@@ -90,3 +90,17 @@ class DirectionAdmin(admin.ModelAdmin):
     list_display = ('title',)
 
 admin.site.register(Direction,DirectionAdmin)
+
+
+class Publication(models.Model):
+    account = models.ForeignKey(Account)
+    def path(self):
+        return '/%s/publications/' % self.account_id
+    media_file = models.FileField(upload_to=path)
+
+
+class Diploma(models.Model):
+    account = models.ForeignKey(Account)
+    def path(self):
+        return '/%s/diplomas/' % self.account_id
+    media_file = models.FileField(upload_to=path)

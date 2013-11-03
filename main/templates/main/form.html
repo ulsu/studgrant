@@ -3,6 +3,8 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.formset.js"></script>
     <script>
         $(function(){
+            $("#pub_formset").formset();
+            $("#dip_formset").formset();
             $("#plan_formset").formset();
         });
     </script>
@@ -116,7 +118,12 @@
             <div class="row">
                 {{ account.publication_list }}		        <span class="error_text"></span>
                 <p style="color: #5F6264; font: 12px 'segoe',sans-serif;"><i>Приводимую информацию нужно подтвердить ксерокопиями соответствующих документов, прикрепив необходимые файлы в любом из следующих форматов: rtf, pdf, doc, jpg. Название файла не должно содержать русских букв, пробелов и спецсимволов. Размер каждого файла &ndash; не более 2Мб.</i></p>
-                <input type="hidden" name="Files[perf_publlist_files][]" value="" id="ytFiles_perf_publlist_files"><div id="Files_perf_publlist_files_wrap" class="MultiFile-wrap"><input type="file" id="Files_perf_publlist_files_F2" name="Files[perf_publlist_files][]" accept="png|gif|jpg|doc|docx|pdf|djvu|rtf|odt" class="multi MultiFile-applied MultiFile"><div id="Files_perf_publlist_files_wrap_list" class="MultiFile-list"></div></div>
+                <div id="pub_formset" data-formset-prefix="{{ pub_formset.prefix }}">
+                    {{ pub_formset.management_form }}
+                    <div data-formset-body>{% for form in pub_formset.forms %}{% include 'main/file_formset_item.html' %}{% endfor %}</div>
+                    <script type="form-template" data-formset-empty-form>{% with form=pub_formset.empty_form %}{% include 'main/file_formset_item.html' %}{% endwith %}</script>
+                    <input type="button" value="Add another" data-formset-add>
+                </div>
             </div>
 
             <h4>Наличие наград, дипломов, результаты участия в конкурсах студенческих работ, олимпиадах, конференциях</h4>
@@ -124,7 +131,12 @@
             <div class="row">
                 {{ account.achivements }}                   <span class="error_text"></span>
                 <p style="color: #5F6264; font: 12px 'segoe',sans-serif;"><i>Приводимую информацию нужно подтвердить ксерокопиями соответствующих документов, прикрепив необходимые файлы в любом из следующих форматов: rtf, pdf, doc, jpg. Название файла не должно содержать русских букв, пробелов и спецсимволов. Размер каждого файла &ndash; не более 2Мб.</i></p>
-                <input type="hidden" name="Files[perf_diploms_files][]" value="" id="ytFiles_perf_diploms_files"><div id="Files_perf_diploms_files_wrap" class="MultiFile-wrap"><input type="file" id="Files_perf_diploms_files" name="Files[perf_diploms_files][]" accept="png|gif|jpg|doc|docx|pdf|djvu|rtf|odt" class="multi MultiFile-applied"><div id="Files_perf_diploms_files_wrap_list" class="MultiFile-list"></div></div>
+                <div id="dip_formset" data-formset-prefix="{{ dip_formset.prefix }}">
+                    {{ dip_formset.management_form }}
+                    <div data-formset-body>{% for form in dip_formset.forms %}{% include 'main/file_formset_item.html' %}{% endfor %}</div>
+                    <script type="form-template" data-formset-empty-form>{% with form=dip_formset.empty_form %}{% include 'main/file_formset_item.html' %}{% endwith %}</script>
+                    <input type="button" value="Add another" data-formset-add>
+                </div>
             </div>
 
             <h3>Научный проект</h3>

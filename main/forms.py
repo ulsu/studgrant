@@ -20,19 +20,25 @@ class AccountForm(ModelForm):
                 field.widget.attrs.update({'placeholder': field.help_text})
 
 
-
 class PlanForm(ModelForm):
     class Meta:
         model = DetailedPlan
         exclude = ['account']
 
-    def __init__(self, *args, **kwargs):
-        super(PlanForm, self).__init__(*args, **kwargs)
-        for f in self.fields:
-            field = self.fields.get(f)
-            if type(field.widget) in (forms.TextInput, forms.DateInput):
-                field.widget = forms.TextInput(attrs={'placeholder': field.label})
-            if type(field.widget) is forms.Textarea:
-                field.widget.attrs.update({'placeholder': field.help_text})
-
 PlanFormSet = inlineformset_factory(Account, DetailedPlan, form=PlanForm, extra=1)
+
+
+class PublicationForm(ModelForm):
+    class Meta:
+        model = Publication
+        exclude = ['account']
+
+PubFormSet = inlineformset_factory(Account, Publication, form=PublicationForm, extra=1)
+
+
+class DiplomaForm(ModelForm):
+    class Meta:
+        model = Diploma
+        exclude = ['account']
+
+DipFormSet = inlineformset_factory(Account, Diploma, form=DiplomaForm, extra=1)
