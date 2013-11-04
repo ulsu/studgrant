@@ -5,6 +5,14 @@ from models import *
 from forms import *
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
+from django.views.static import serve
+from studgrant import settings
+
+
+def mediaserver(request, path):
+    if request.user.is_superuser:
+        return serve(request, path, settings.MEDIA_ROOT)
+
 
 @login_required
 def main(request):
@@ -38,5 +46,13 @@ def save(request):
         plan_formset = PlanFormSet(request.POST, instance=account)
         if plan_formset.is_valid():
             plan_formset.save()
+
+        pub_formset = PubFormSet(request.POST, request.FILES, instance=account)
+        if pub_formset.is_valid():
+            pub_formset.save()
+
+        dip_formset = DipFormSet(request.POST, request.FILES, instance=account)
+        if dip_formset.is_valid():
+            dip_formset.save()
     return redirect('/')
 

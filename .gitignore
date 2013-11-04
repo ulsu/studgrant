@@ -3,3 +3,4 @@ studgrant/private_settings.py
 *.db
 *.pyc
 .idea
+media

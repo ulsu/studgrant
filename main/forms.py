@@ -3,6 +3,7 @@ from django import forms
 from django.forms import ModelForm
 import datetime
 from models import *
+from widgets import *
 from django.forms.models import inlineformset_factory
 
 class AccountForm(ModelForm):
@@ -33,6 +34,10 @@ class PublicationForm(ModelForm):
         model = Publication
         exclude = ['account']
 
+    def __init__(self, *args, **kwargs):
+        super(PublicationForm, self).__init__(*args, **kwargs)
+        self.fields['media_file'].widget = InlineFileInput()
+
 PubFormSet = inlineformset_factory(Account, Publication, form=PublicationForm, extra=1)
 
 
@@ -40,5 +45,9 @@ class DiplomaForm(ModelForm):
     class Meta:
         model = Diploma
         exclude = ['account']
+
+    def __init__(self, *args, **kwargs):
+        super(DiplomaForm, self).__init__(*args, **kwargs)
+        self.fields['media_file'].widget = InlineFileInput()
 
 DipFormSet = inlineformset_factory(Account, Diploma, form=DiplomaForm, extra=1)

@@ -94,13 +94,16 @@ admin.site.register(Direction,DirectionAdmin)
 
 class Publication(models.Model):
     account = models.ForeignKey(Account)
-    def path(self):
-        return '/%s/publications/' % self.account_id
+
+    def path(self, filename):
+        return '%s/publications/%s' % (self.account_id, filename)
     media_file = models.FileField(upload_to=path)
 
 
 class Diploma(models.Model):
     account = models.ForeignKey(Account)
-    def path(self):
-        return '/%s/diplomas/' % self.account_id
+
+    def path(self, filename):
+        return '%s/diplomas/%s' % (self.account_id, filename)
+
     media_file = models.FileField(upload_to=path)
