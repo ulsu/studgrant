@@ -113,6 +113,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'main',
     'accounts',
+    'xhtml2pdf',
 )
 
 # A sample logging configuration. The only tangible logging

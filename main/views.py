@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.views.static import serve
 from studgrant import settings
+from django.shortcuts import get_object_or_404
+from pdf_generator.views import generate_pdf
 
 
 def mediaserver(request, path):
@@ -61,4 +63,14 @@ def save(request):
         if coauthor_formset.is_valid():
             coauthor_formset.save()
     return redirect('/')
+
+def pdf(request, id):
+    account = get_object_or_404(Account, pk=id)
+    if request.user.is_staff or request.user == account.user:
+        form = AccountForm(instance=account)
+        context = {
+            'account': form,
+            'plan': PlanFormSet(instance=account)
+        }
+        return generate_pdf(request, context)
 
