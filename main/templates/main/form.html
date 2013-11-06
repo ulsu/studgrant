@@ -1,14 +1,39 @@
 {% extends "base.html" %}
 {% block js %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.formset.js"></script>
-    <script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.ui.core.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.ui.datepicker.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.ui.datepicker-ru.js"></script>
+    <script type="text/javascript">
         $(function(){
             $("#pub_formset").formset();
             $("#dip_formset").formset();
             $("#plan_formset").formset();
+            $("#coauthor_formset").formset();
+            $.datepicker.setDefaults(
+                $.extend($.datepicker.regional["ru"])
+            );
+            $(".datepicker").datepicker({
+                rangeSelect: true,
+                changeYear: true,
+                changeMonth: true,
+                yearRange: "1990:2013",
+                firstDay: 1
+            });
+
+            $('#addCow').on('click', function(){
+                $(".datepicker").datepicker();
+            })
         });
     </script>
 {% endblock %}
+
+{% block css %}{% endblock %}
+
+
+
 {% block content %}
     <form method="post" action="/send/" id="forms-form" enctype="multipart/form-data" class="MultiFile-intercepted">
         <p style="color: #5F6264; font: 12px 'segoe',sans-serif;"><span style="color:red;">Внимание!</span>
@@ -208,17 +233,35 @@
                 <input type="button" value="Add another" data-formset-add>
             </div>
 
+            <h4>Ожидаемые научные результаты</h4>
+            <div class="row">
+                {{ account.scientific_results }}
+                <span class="error_text"></span>
+            </div>
+
+            <h4>Отзыв научного руководителя о планируемой работе</h4>
+            <div class="row">
+                <p style="color: #5F6264; font: 12px 'segoe',sans-serif;">
+                    <i>Название файла не должно содержать русских букв, пробелов и спецсимволов. Размер файла &ndash; не более 20Мб.</i>
+                </p>
+                {{ account.report }}
+            </div>
+
+            <h3>Данные о соисполнителях</h3>
+            <div id="coauthor_formset" data-formset-prefix="{{ coauthor_formset.prefix }}">
+                {{ coauthor_formset.management_form }}
+                <div data-formset-body>{% for form in coauthor_formset.forms %}{% include 'main/coauthor_formset_item.html' %}{% endfor %}</div>
+                <script type="form-template" data-formset-empty-form>{% with form=coauthor_formset.empty_form %}{% include 'main/coauthor_formset_item.html' %}{% endwith %}</script>
+                <div id="addCow" class="ww" data-formset-add>
+                    <div id="addCowText">Добавить соисполнителя</div>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+
 
         </div>
     {% csrf_token %}
     <button type="submit" formaction="/send/">Отправить</button>
     </form>
-
-
-
-
-
-
-
 
 {% endblock %}

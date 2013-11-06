@@ -4,15 +4,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="language" content="ru" />
 
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery-ui-1.9.2.custom.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
     {% block css %}{% endblock %}
 
     <script src="{{ STATIC_URL }}js/jquery.min.js" type="text/javascript"></script>
-{#    <script src="{{ STATIC_URL }}js/jquery.form.js" type="text/javascript"></script>#}
-{#    <script src="{{ STATIC_URL }}js/jquery.MetaData.js" type="text/javascript"></script>#}
-{#    <script src="{{ STATIC_URL }}js/jquery.validate.js" type="text/javascript"></script>#}
-{#    <script src="{{ STATIC_URL }}js/jquery.MultiFile.js" type="text/javascript"></script>#}
-{#    <script src="{{ STATIC_URL }}js/delFile.js" type="text/javascript"></script>#}
     {% block js %} {% endblock %}
 
     <title>Конкурс студенческих грантов УлГУ</title>

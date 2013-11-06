@@ -1,0 +1,35 @@
+<div data-formset-form class="data-formset-form ww" xmlns="http://www.w3.org/1999/html">
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    {{ form.fio }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ form.date }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ form.place }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ form.place }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a data-formset-delete-button class="data-formset-delete-button">Удалить</a>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    {{ form.id }}
+    <span style="display:none;">{{ form.DELETE }}</span>
+
+</div>

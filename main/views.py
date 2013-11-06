@@ -25,6 +25,7 @@ def show_form(request):
     plan_formset = PlanFormSet(instance=account)
     pub_formset = PubFormSet(instance=account)
     dip_formset = DipFormSet(instance=account)
+    coauthor_formset = CoauthorFormSet(instance=account)
 
     t = loader.get_template("main/form.html")
     c = RequestContext(request, {
@@ -32,6 +33,7 @@ def show_form(request):
         'plan_formset': plan_formset,
         'pub_formset': pub_formset,
         'dip_formset': dip_formset,
+        'coauthor_formset': coauthor_formset
     })
     return HttpResponse(t.render(c))
 
@@ -39,7 +41,7 @@ def show_form(request):
 def save(request):
     if request.method == 'POST':
         account, created = Account.objects.get_or_create(user=request.user)
-        account_form = AccountForm(request.POST, instance=account)
+        account_form = AccountForm(request.POST, request.FILES, instance=account)
         if account_form.is_valid():
             account = account_form.save()
 
@@ -54,5 +56,9 @@ def save(request):
         dip_formset = DipFormSet(request.POST, request.FILES, instance=account)
         if dip_formset.is_valid():
             dip_formset.save()
+
+        coauthor_formset = CoauthorFormSet(request.POST, instance=account)
+        if coauthor_formset.is_valid():
+            coauthor_formset.save()
     return redirect('/')
 

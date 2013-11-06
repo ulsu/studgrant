@@ -50,23 +50,28 @@ class Account(models.Model):
     proposed_methods = models.TextField(verbose_name="Предлагаемые методы и подходы (с оценкой степени новизны)", blank=True, null=True)
     scientific_results = models.TextField(verbose_name="Ожидаемые научные результаты", help_text="Форма изложения должна дать возможность провести экспертизу результатов", blank=True, null=True)
 
+    def report_path(self, filename):
+        return '%s/report/%s' % (self.id, filename)
+
+    report = models.FileField(verbose_name="Отзыв научного руководителя о планируемой работе", blank=True, null=True, upload_to=report_path)
+
 class AccountAdmin(admin.ModelAdmin):
     title = ('user','user_fio', 'user_mail')
 
 admin.site.register(Account, AccountAdmin)
 
-class DataCoauthors(models.Model):
+class Coauthor(models.Model):
     account = models.ForeignKey(Account)
-    coauthor_fio = models.CharField(max_length=255, verbose_name='ФИО', blank=True, null=True)
-    coauthor_date = models.DateField(verbose_name='Дата рождения', blank=True, null=True)
-    coauthor_place = models.TextField(verbose_name="Место учёбы (факультет, специальность, курс, группа, форма обучения: бюджетная или внебюджетная)",help_text="Место учёбы (факультет, специальность, курс, группа, форма обучения: бюджетная или внебюджетная)", blank=True, null=True)
-    contact_information = models.TextField(verbose_name='Почтовый адрес, телефон, электронный адрес', help_text='Почтовый адрес, телефон, электронный адрес', blank=True, null=True)
+    fio = models.CharField(max_length=255, verbose_name='ФИО', blank=True, null=True)
+    date = models.DateField(verbose_name='Дата рождения', blank=True, null=True)
+    place = models.TextField(verbose_name="Место учёбы (факультет, специальность, курс, группа, форма обучения: бюджетная или внебюджетная)",help_text="Место учёбы (факультет, специальность, курс, группа, форма обучения: бюджетная или внебюджетная)", blank=True, null=True)
+    information = models.TextField(verbose_name='Почтовый адрес, телефон, электронный адрес', help_text='Почтовый адрес, телефон, электронный адрес', blank=True, null=True)
 
 
-class DataCoauthorsAdmin(admin.ModelAdmin):
-    list_display = ('coauthor_fio', 'coauthor_date', 'coauthor_place', 'contact_information',)
+class CoauthorAdmin(admin.ModelAdmin):
+    list_display = ('fio', 'date', 'place', 'information',)
 
-admin.site.register(DataCoauthors, DataCoauthorsAdmin)
+admin.site.register(Coauthor, CoauthorAdmin)
 
 
 class DetailedPlan(models.Model):

@@ -57,7 +57,7 @@
         this.$body.append($newForm);
         this.bindForm($newForm, newIndex);
         $newForm.slideUp(0);
-        $newForm.slideDown();
+        $newForm.toggle();
 
         return $newForm;
     };
@@ -74,7 +74,7 @@
 
         if ($deleteButton.length) {
             $deleteButton.bind('click', function() {
-                $form.slideUp();
+                $form.toggle();
                 $delete.attr('checked', true);
             });
 

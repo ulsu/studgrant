@@ -15,10 +15,13 @@ class AccountForm(ModelForm):
         super(AccountForm, self).__init__(*args, **kwargs)
         for f in self.fields:
             field = self.fields.get(f)
-            if type(field.widget) in (forms.TextInput, forms.DateInput):
+            if type(field.widget) == forms.TextInput:
                 field.widget = forms.TextInput(attrs={'placeholder': field.label})
-            if type(field.widget) is forms.Textarea:
-                field.widget.attrs.update({'placeholder': field.help_text})
+            if type(field.widget) == forms.DateInput:
+                field.widget = forms.DateInput(attrs={'placeholder': field.label, 'class': 'datepicker'})
+            if type(field.widget) == forms.Textarea:
+                field.widget = forms.Textarea(attrs={'placeholder': field.label})
+
 
 
 class PlanForm(ModelForm):
@@ -51,3 +54,22 @@ class DiplomaForm(ModelForm):
         self.fields['media_file'].widget = InlineFileInput()
 
 DipFormSet = inlineformset_factory(Account, Diploma, form=DiplomaForm, extra=1)
+
+
+class CoauthorForm(ModelForm):
+    class Meta:
+        model = Coauthor
+        exclude = ['account']
+
+    def __init__(self, *args, **kwargs):
+        super(CoauthorForm, self).__init__(*args, **kwargs)
+        for f in self.fields:
+            field = self.fields.get(f)
+            if type(field.widget) == forms.TextInput:
+                field.widget = forms.TextInput(attrs={'placeholder': field.label})
+            if type(field.widget) == forms.DateInput:
+                field.widget = forms.DateInput(attrs={'placeholder': field.label, 'class': 'datepicker'})
+            if type(field.widget) == forms.Textarea:
+                field.widget = forms.Textarea(attrs={'placeholder': field.label})
+
+CoauthorFormSet = inlineformset_factory(Account, Coauthor, form=CoauthorForm, extra=1)
