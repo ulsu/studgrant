@@ -41,8 +41,8 @@ class Account(models.Model):
     supervisor_achivements = models.BooleanField(verbose_name='Наличие выполняемых научно-исследовательских работ в рамках грантов, хоз. договоров',)
 # форма научного проекта
     project_name = models.TextField(verbose_name="Название проекта", blank=True, null=True)
-    direction = models.ForeignKey('Direction', blank=True, null=True)
-    perf_problem = models.TextField(verbose_name="Научная проблема, на решение которой направлен проект, ее актуальность, фундаментальная и практическая ценность. Место планируемых работ в обозначенной тематике ", blank=True, null=True)
+    direction = models.ForeignKey('Direction', blank=True, null=True, verbose_name="Направление конкурса (в соответствии с объявленными номинациями)")
+    perf_problem = models.TextField(verbose_name="Научная проблема, на решение которой направлен проект, ее актуальность, фундаментальная и практическая ценность. Место планируемых работ в обозначенной тематике", blank=True, null=True)
     stat_of_research = models.TextField(verbose_name="Современное состояние исследований в данной области науки", blank=True, null=True)
     perf_zadel = models.TextField(verbose_name="Имеющийся у исполнителя научный задел по предлагаемому проекту: полученные ранее результаты (с оценкой степени оригинальности), разработанные методы (с оценкой степени новизны)", blank=True, null=True)
     shot_annotation = models.TextField(verbose_name="Краткая аннотация (не более 0,5 стр.)", blank=True, null=True)

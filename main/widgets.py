@@ -1,6 +1,6 @@
 from django.forms.widgets import FileInput
 from django.utils.safestring import mark_safe
-from django.utils.encoding import force_text
+from django.utils.encoding import force_unicode
 
 
 class InlineFileInput(FileInput):
@@ -13,7 +13,7 @@ class InlineFileInput(FileInput):
     def render(self, name, value, attrs=None):
         output = []
         if value and hasattr(value, "url"):
-            output = ['<a href="%s">%s</a>' % (value.url, self._get_filename(force_text(value)))]
+            output = ['<a href="%s">%s</a>' % (value.url, self._get_filename(force_unicode(value)))]
         else:
             output.append(super(InlineFileInput, self).render(name, value, attrs))
         return mark_safe(u''.join(output))

@@ -1,0 +1,227 @@
+{% load i18n %}
+{% load replace_n %}
+{% load danet %}
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <style type="text/css">
+        @font-face {
+            font-family: Verdana;
+            src: url(C:/Users/Haruhi/PycharmProjects/studgrant/static/fonts/verdana.ttf);
+        }
+
+        body {
+            font-family: Verdana;
+        }
+
+        #main_table{
+            border: 1px solid #000;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 20px;
+            -pdf-keep-with-next: true;
+        }
+
+        h3 {
+            margin-top: 25px;
+            font-size: 18px;
+            -pdf-keep-with-next: true;
+        }
+
+        h4 {
+            margin-top: 15px;
+            font-size: 16px;
+            -pdf-keep-with-next: true;
+        }
+
+        div.dt{
+            font-weight: 400;
+            font-size: 14px;
+            margin: 0;
+            padding: 0;
+            -pdf-keep-with-next: true;
+        }
+
+        p.dd{
+            margin-top: 0;
+            margin-bottom:20px;
+            padding-left:5px;
+        }
+
+        table td{
+            font-size: 10px;
+        }
+
+        table {
+            margin-bottom: 40px;
+        }
+
+
+        @page {
+            @frame content_frame {
+                left: 50pt; width: 512pt; top: 40pt; height: 760pt;
+            }
+            @frame footer_frame {
+                -pdf-frame-content: footer_content;
+                left: 50pt; width: 512pt; top: 772pt; height: 20pt;
+            }
+         }
+    </style>
+</head>
+<body>
+<h1 style="font-size: 24px; text-align:center;">Заявка</h1>
+<h2 style="text-align:center;">на участие в конкурсе студенческих грантов <br />Ульяновского Государственного Университета</h2>
+
+<h3>Данные об исполнителе</h3>
+
+<div class="dt">{{ account.user_fio.label }}</div>
+<p class="dd">{{ account.user_fio.value }}</p>
+
+<div class="dt">{{ account.user_date.label }}</div>
+<p class="dd">{{ account.user_date.value }}</p>
+
+<div class="dt">{{ account.user_address.label }}</div>
+<p class="dd">{{ account.user_address.value }}</p>
+
+<div class="dt">{{ account.user_home_phone.label }}</div>
+<p class="dd">{{ account.user_home_phone.value }}</p>
+
+<div class="dt">{{ account.user_mobile_phone.label }}</div>
+<p class="dd">{{ account.user_mobile_phone.value }}</p>
+
+<div class="dt">{{ account.user_mail.label }}</div>
+<p class="dd">{{ account.user_mail.value }}</p>
+
+
+<h4>Место учёбы</h4>
+
+<div class="dt">{{ account.user_faculty.label }}</div>
+<p class="dd">{{ account.user_faculty.value }}</p>
+
+<div class="dt">{{ account.user_specialty.label }}</div>
+<p class="dd">{{ account.user_specialty.value }}</p>
+
+<div class="dt">{{ account.user_group.label }}</div>
+<p class="dd">{{ account.user_group.value }}</p>
+
+<div class="dt">{{ account.user_education_form.label }}</div>
+<p class="dd">{{ account.user_education_form.value }}</p>
+
+<div class="dt">{{ account.user_course.label }}</div>
+<p class="dd">{{ account.user_course.value }}</p>
+
+<div class="dt">{{ account.science_area.label }}</div>
+<p class="dd">{{ account.science_area.value|replace_n }}</p>
+
+<div class="dt">{{ account.project_support.label }}</div>
+<p class="dd">{{ account.project_support.value|replace_n }}</p>
+
+<div class="dt">{{ account.research.label }}</div>
+<p class="dd">{{ account.research.value|replace_n }}</p>
+
+<div class="dt">{{ account.publication_list.label }}</div>
+<p class="dd">{{ account.publication_list.value|replace_n }}</p>
+
+<div class="dt">{{ account.achivements.label }}</div>
+<p class="dd">{{ account.achivements.value|replace_n }}</p>
+
+
+<h3>Данные о научном руководителе</h3>
+
+<div class="dt">{{ account.supervisor_fio.label }}</div>
+<p class="dd">{{ account.supervisor_fio.value }}</p>
+
+<div class="dt">{{ account.contact_info.label }}</div>
+<p class="dd">{{ account.contact_info.value }}</p>
+
+<div class="dt">{{ account.supervisor_faculty.label }}</div>
+<p class="dd">{{ account.supervisor_faculty.value }}</p>
+
+<div class="dt">{{ account.supervisor_insitute.label }}</div>
+<p class="dd">{{ account.supervisor_insitute.value }}</p>
+
+<div class="dt">{{ account.supervisor_kafedra.label }}</div>
+<p class="dd">{{ account.supervisor_kafedra.value }}</p>
+
+<div class="dt">{{ account.supervisor_science_area.label }}</div>
+<p class="dd">{{ account.supervisor_science_area.value }}</p>
+
+<div class="dt">{{ account.publication_count.label }}</div>
+<p class="dd">{{ account.publication_count.value }}</p>
+
+<div class="dt">{{ account.supervisor_achivements.label }}</div>
+<p class="dd">{{ account.supervisor_achivements.value|danet }}</p>
+
+
+<h3>Данные о научной проблеме</h3>
+
+<div class="dt">{{ account.project_name.label }}</div>
+<p class="dd">{{ account.project_name.value }}</p>
+
+<div class="dt">{{ account.direction.label }}</div>
+<p class="dd">{{ account.direction.value }}</p>
+
+<div class="dt">{{ account.perf_problem.label }}</div>
+<p class="dd">{{ account.perf_problem.value }}</p>
+
+<div class="dt">{{ account.stat_of_research.label }}</div>
+<p class="dd">{{ account.stat_of_research.value }}</p>
+
+<div class="dt">{{ account.perf_zadel.label }}</div>
+<p class="dd">{{ account.perf_zadel.value }}</p>
+
+<div class="dt">{{ account.shot_annotation.label }}</div>
+<p class="dd">{{ account.shot_annotation.value }}</p>
+
+<div class="dt">{{ account.goals_and_objectives.label }}</div>
+<p class="dd">{{ account.goals_and_objectives.value }}</p>
+
+<div class="dt">{{ account.proposed_methods.label }}</div>
+<p class="dd">{{ account.proposed_methods.value }}</p>
+
+<h3 class="page-break">Подробный план работ на весь срок выполнения проекта, включая участие в научных мероприятиях</h3>
+<table style="margin-bottom: 50px;" class="plan" border="1" cellpadding="5">
+    <thead>
+        <tr>
+            <th style="width:30px;">№</th>
+            <th>Сроки проведения</th>
+            <th>Содержание работ</th>
+            <th>Место проведения</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in plan %}{% if p.dates.value and p.content.value and p.place.value %}
+        <tr>
+            <td style="width:30px; text-align: center;">{{ forloop.counter }}</td>
+            <td>{{ p.dates }}</td>
+            <td>{{ p.content }}</td>
+            <td>{{ p.place }}</td>
+        </tr>
+        {% endif %}{% endfor %}
+    </tbody>
+</table>
+
+<div class="dt">{{ account.scientific_results.label }}</div>
+<p class="dd">{{ account.scientific_results.value }}</p>
+
+<table class="mark" style="margin-top:50px; padding-top:10px;">
+    <tr>
+        <td style="font-size: 14px;">Исполнитель проекта</td>
+        <td style="font-size: 14px;">_______________/________________</td>
+    </tr>
+    <tr>
+        <td style="font-size: 14px;">Научный руководитель</td>
+        <td style="font-size: 14px;">_______________/________________</td>
+    </tr>
+</table>
+
+<div style="text-align: right" id="footer_content"><pdf:pagenumber>
+</div>
+</body>
+</html>
