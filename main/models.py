@@ -51,7 +51,7 @@ class Account(models.Model):
     supervisor_achivements = models.BooleanField(verbose_name='Наличие выполняемых научно-исследовательских работ в рамках грантов, хоз. договоров',)
     # Форма научного проекта
     project_name = models.TextField(verbose_name="Название проекта", blank=True, null=True)
-    direction = models.ForeignKey('Direction', blank=True, null=True, verbose_name="Направление конкурса (в соответствии с объявленными номинациями)")
+    direction = models.ForeignKey('Direction', blank=True, null=True, related_name='accounts', verbose_name="Направление конкурса (в соответствии с объявленными номинациями)", )
     perf_problem = models.TextField(verbose_name="Научная проблема, на решение которой направлен проект, ее актуальность, фундаментальная и практическая ценность. Место планируемых работ в обозначенной тематике", blank=True, null=True)
     stat_of_research = models.TextField(verbose_name="Современное состояние исследований в данной области науки", blank=True, null=True)
     perf_zadel = models.TextField(verbose_name="Имеющийся у исполнителя научный задел по предлагаемому проекту: полученные ранее результаты (с оценкой степени оригинальности), разработанные методы (с оценкой степени новизны)", blank=True, null=True)
@@ -69,13 +69,6 @@ class Account(models.Model):
         verbose_name = 'форма'
         verbose_name_plural = 'формы'
 
-
-class AccountAdmin(admin.ModelAdmin):
-    title = ('user','user_fio', 'user_mail')
-
-
-admin.site.register(Account, AccountAdmin)
-
 class Coauthor(models.Model):
     account = models.ForeignKey(Account)
     fio = models.CharField(max_length=255, verbose_name='ФИО', blank=True, null=True)
@@ -91,7 +84,7 @@ class DetailedPlan(models.Model):
 
 
 class Publication(models.Model):
-    account = models.ForeignKey(Account)
+    account = models.ForeignKey(Account, related_name='publications')
 
     def path(self, filename):
         return '%s/publications/%s' % (self.account_id, filename)
@@ -99,7 +92,7 @@ class Publication(models.Model):
 
 
 class Diploma(models.Model):
-    account = models.ForeignKey(Account)
+    account = models.ForeignKey(Account, related_name='diplomas')
 
     def path(self, filename):
         return '%s/diplomas/%s' % (self.account_id, filename)

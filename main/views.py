@@ -18,7 +18,10 @@ def mediaserver(request, path):
 
 @login_required
 def main(request):
-    return show_form(request)
+    if request.user.is_secretary or request.user.is_superuser:
+        return show_table(request)
+    else:
+        return show_form(request)
 
 
 def show_form(request):
@@ -73,4 +76,11 @@ def pdf(request, id):
             'plan': PlanFormSet(instance=account)
         }
         return generate_pdf(request, context)
+
+def show_table(request):
+    directions = Direction.objects.all()
+
+    t = loader.get_template("main/accounts_list.html")
+    c = RequestContext(request, {'directions': directions})
+    return HttpResponse(t.render(c))
 
