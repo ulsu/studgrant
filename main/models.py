@@ -12,11 +12,6 @@ class Direction(models.Model):
         verbose_name = 'направление'
         verbose_name_plural = 'направления'
 
-class DirectionAdmin(admin.ModelAdmin):
-    list_display = ('title',)
-
-admin.site.register(Direction,DirectionAdmin)
-
 
 class Account(models.Model):
     user = models.ForeignKey('accounts.User', verbose_name='Пользователь')
@@ -60,10 +55,30 @@ class Account(models.Model):
     proposed_methods = models.TextField(verbose_name="Предлагаемые методы и подходы (с оценкой степени новизны)", blank=True, null=True)
     scientific_results = models.TextField(verbose_name="Ожидаемые научные результаты", help_text="Форма изложения должна дать возможность провести экспертизу результатов", blank=True, null=True)
 
+    def admin_direction(self):
+        return self.direction
+    admin_direction.short_description = 'Направление'
+
+    def admin_user(self):
+        return self.user
+    admin_user.short_description = 'Логин'
+
+    def admin_user_fio(self):
+        return self.user_fio
+    admin_user_fio.short_description = 'Студент'
+
+    def admin_supervisor_fio(self):
+        return self.supervisor_fio
+    admin_supervisor_fio.short_description = 'Научный руководитель'
+
+
     def report_path(self, filename):
         return '%s/report/%s' % (self.id, filename)
 
     report = models.FileField(verbose_name="Отзыв научного руководителя о планируемой работе", blank=True, null=True, upload_to=report_path)
+
+    def __unicode__(self):
+        return self.user_fio
 
     class Meta:
         verbose_name = 'форма'
@@ -76,19 +91,40 @@ class Coauthor(models.Model):
     place = models.TextField(verbose_name="Место учёбы (факультет, специальность, курс, группа, форма обучения: бюджетная или внебюджетная)",help_text="Место учёбы (факультет, специальность, курс, группа, форма обучения: бюджетная или внебюджетная)", blank=True, null=True)
     information = models.TextField(verbose_name='Почтовый адрес, телефон, электронный адрес', help_text='Почтовый адрес, телефон, электронный адрес', blank=True, null=True)
 
+    def __unicode__(self):
+        return self.fio
+
+    class Meta:
+        verbose_name = 'соавтор'
+        verbose_name_plural = 'соавторы'
+
+
 class DetailedPlan(models.Model):
     account = models.ForeignKey(Account)
     dates = models.TextField(verbose_name="Сроки проведения", blank=True, null=True)
     content = models.TextField(verbose_name="Содержание работ", blank=True, null=True)
     place = models.TextField(verbose_name="Место проведения", blank=True, null=True)
 
+    def __unicode__(self):
+        return self.fio
+
+    class Meta:
+        verbose_name = 'этап'
+        verbose_name_plural = 'этапы плана'
 
 class Publication(models.Model):
     account = models.ForeignKey(Account, related_name='publications')
 
     def path(self, filename):
         return '%s/publications/%s' % (self.account_id, filename)
-    media_file = models.FileField(upload_to=path)
+    media_file = models.FileField(upload_to=path, verbose_name='Прикреплённый файл')
+
+    def __unicode__(self):
+        return self.media_file
+
+    class Meta:
+        verbose_name = 'публикация'
+        verbose_name_plural = 'публикации'
 
 
 class Diploma(models.Model):
@@ -96,5 +132,11 @@ class Diploma(models.Model):
 
     def path(self, filename):
         return '%s/diplomas/%s' % (self.account_id, filename)
+    media_file = models.FileField(upload_to=path, verbose_name='Прикреплённый файл')
 
-    media_file = models.FileField(upload_to=path)
+    def __unicode__(self):
+        return self.media_file
+
+    class Meta:
+        verbose_name = 'награда, диплом'
+        verbose_name_plural = 'награды, дипломы'
