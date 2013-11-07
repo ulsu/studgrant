@@ -15,7 +15,7 @@
         <tbody>
         {% for d in directions %}
             <tr>
-                <td colspan="5"><h5 class="direction">{{ d.title }}</h5></td>
+                <td colspan="5"><h5 style="text-align: center;" class="direction">{{ d.title }}</h5></td>
             </tr>
             {% for a in d.accounts.all %}
             <tr>
@@ -29,18 +29,25 @@
                 <td style="vertical-align: top;"><a href="/report/{{ a.id }}/">{{ a.project_name }}</a></td>
                 <td style="vertical-align: top;">{{ a.supervisor_fio }}</td>
                 <td style="vertical-align: top;" class="file-links">
+
+                    {% if a.diplomas.all %}
                     <h4>Дипломы</h4>
                     {% for dip in a.diplomas.all %}
                         <div class="file-links-back" style="word-wrap: break-word;">
                             <a href="{{ MEDIA_URL }}{{ dip.media_file }}">{{ dip.media_file.file.name|basename }}</a>
                         </div>
                     {% endfor %}
+                    {% endif %}
+
+                    {% if a.publications.all %}
                     <h4>Публикации</h4>
                     {% for pub in a.publications.all %}
                         <div class="file-links-back" style="word-wrap: break-word;">
                             <a href="{{ MEDIA_URL }}{{ pub.media_file }}">{{ pub.media_file.file.name|basename }}</a>
                         </div>
                     {% endfor %}
+                    {% endif %}
+
                     <h4>Отзыв научного руководителя</h4>
                     <div class="file-links-back" style="word-wrap: break-word;">
                         <a href="{{ MEDIA_URL }}{{ a.report }}">{{ a.report.file.name|basename }}</a>

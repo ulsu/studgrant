@@ -1,20 +1,50 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
-from models import Publication, Account
-from forms import PubFormSet
+from models import *
+from forms import *
+
+
+class DirectionAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+admin.site.register(Direction,DirectionAdmin)
+
 
 class PublicationInline(admin.StackedInline):
     model = Publication
     fk_name = 'account'
-    max_num = 1
-    extra = 0
+    max_num = 100
+    extra = 1
     formset = PubFormSet
+
+
+class DiplomaInline(admin.StackedInline):
+    model = Diploma
+    fk_name = 'account'
+    max_num = 100
+    extra = 1
+    formset = DipFormSet
+
+
+class CoauthorInline(admin.StackedInline):
+    model = Coauthor
+    fk_name = 'account'
+    max_num = 100
+    extra = 1
+    formset = CoauthorFormSet
+
+
+class PlanInline(admin.StackedInline):
+    model = DetailedPlan
+    fk_name = 'account'
+    max_num = 100
+    extra = 1
+    formset = PlanFormSet
 
 
 
 class AccountAdmin(admin.ModelAdmin):
-    title = ('user','user_fio', 'user_mail')
-    inlines = [PublicationInline, ]
+    list_display = ('admin_user', 'admin_user_fio', 'project_name', 'admin_supervisor_fio', 'admin_direction')
+    inlines = [PublicationInline, DiplomaInline, CoauthorInline, PlanInline]
 
     fieldsets = (
         (None, {'fields': ('user',)}),
