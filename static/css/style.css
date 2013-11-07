@@ -246,14 +246,17 @@ td.file-links a:hover {text-decoration: underline;}
 td.file-links div.file-links-back {clear: both; padding: 2px 0 2px 20px; background: url(../img/download.png) left center no-repeat;}
 
 table.planList tr td textarea {width: 267px; height: 60px; border:0; padding: 10px; border-radius: 0; box-shadow: none; margin: 0;}
-table.planList {margin-bottom: 40px;}
+table.planList {margin-bottom: 20px;}
 
 div.formTable {position: relative;}
 div#addRow {position: absolute; padding-right: 13px; bottom: -30px; right:14px; font: 14px "segoe", sans-serif; color: #5f6264; background: url(../img/plus.png) right center no-repeat;}
 
+.data-formset-form {
+    margin: 5px 0;
+}
 .ww{
 	float:left;
-	margin-right:20px;
+	margin-right:60px;
 	margin-bottom:30px;
 }
 
@@ -301,4 +304,34 @@ div#addRow {position: absolute; padding-right: 13px; bottom: -30px; right:14px; 
 
 .errorMessage{
 	color:red;
+}
+
+#id_supervisor_achivements{
+    width: auto;
+}
+input[type="button"] {
+
+}
+.add-file {
+    background: url("../img/plus.png") no-repeat scroll right center rgba(0, 0, 0, 0);
+    color: #5F6264;
+    font: 14px "segoe",sans-serif;
+    text-decoration: none;
+    padding-right: 12px;
+    font-weight: normal;
+}
+
+.data-formset-delete-button {
+    background: url("../img/fileDel.png") no-repeat scroll right center rgba(0, 0, 0, 0);
+    display: block;
+    width: 10px;
+    height: 10px;
+    margin: 0 auto;
+}
+.data-formset-delete-coauthor {
+    background: url("../img/fileDel.png") no-repeat scroll right center rgba(0, 0, 0, 0);
+    color: #5F6264;
+    font: 14px "segoe",sans-serif;
+    padding-right: 12px;
+    font-weight: normal;
 }

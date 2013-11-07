@@ -147,7 +147,7 @@
                     {{ pub_formset.management_form }}
                     <div data-formset-body>{% for form in pub_formset.forms %}{% include 'main/file_formset_item.html' %}{% endfor %}</div>
                     <script type="form-template" data-formset-empty-form>{% with form=pub_formset.empty_form %}{% include 'main/file_formset_item.html' %}{% endwith %}</script>
-                    <input type="button" value="Add another" data-formset-add>
+                    <a href="#" onclick="return false;" class="add-file" data-formset-add>Добавить файл</a>
                 </div>
             </div>
 
@@ -160,7 +160,7 @@
                     {{ dip_formset.management_form }}
                     <div data-formset-body>{% for form in dip_formset.forms %}{% include 'main/file_formset_item.html' %}{% endfor %}</div>
                     <script type="form-template" data-formset-empty-form>{% with form=dip_formset.empty_form %}{% include 'main/file_formset_item.html' %}{% endwith %}</script>
-                    <input type="button" value="Add another" data-formset-add>
+                    <a href="#" onclick="return false;" class="add-file" data-formset-add>Добавить файл</a>
                 </div>
             </div>
 
@@ -230,7 +230,7 @@
                         {% include 'main/table_formset_item.html' %}
                     {% endwith %}
                 </script>
-                <input type="button" value="Add another" data-formset-add>
+                <a href="#" onclick="return false;" class="add-file" data-formset-add>Добавить строку</a>
             </div>
 
             <h4>Ожидаемые научные результаты</h4>
