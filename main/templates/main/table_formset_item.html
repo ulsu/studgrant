@@ -1,11 +1,11 @@
 <tr data-formset-form class="data-formset-form">
-    <td></td>
+    <td>{{ forloop.counter }}</td>
     <td>{{ form.dates }}</td>
     <td>{{ form.content }}</td>
     <td>{{ form.place }}</td>
     <td>
         {{ form.id }}
         <span style="display:none;">{{ form.DELETE }}</span>
-        <a data-formset-delete-button class="data-formset-delete-button"></a>
+        <a data-formset-delete-button class="data-formset-delete-button del-row"></a>
     </td>
 </tr>

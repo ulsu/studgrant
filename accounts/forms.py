@@ -12,7 +12,6 @@ class LoginForm(forms.Form):
 
 class RegisterForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'autofocus': '', 'size': 60, 'placeholder': 'E-mail'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'size': 60, 'placeholder': 'Пароль'}))
 
 
 

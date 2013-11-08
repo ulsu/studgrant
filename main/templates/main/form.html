@@ -25,7 +25,29 @@
 
             $('#addCow').on('click', function(){
                 $(".datepicker").datepicker();
-            })
+            });
+
+            function render_table(){
+                var tr_list = $('.planList').children('tbody').children('tr');
+                var counter = 1;
+                for (var i = 0; i < tr_list.length; i++){
+                    var tr = $(tr_list[i]);
+                    console.log(tr.css('display'));
+                    if (tr.css('display') != 'none'){
+                        tr.children('td').eq(0).html(counter);
+                        counter++;
+                    }
+
+                }
+            }
+
+            $('.planList').on('click', '.del-row', function(){
+                render_table();
+            });
+
+            $('.add-row').on('click', function(){
+                render_table();
+            });
         });
     </script>
 {% endblock %}
@@ -230,7 +252,7 @@
                         {% include 'main/table_formset_item.html' %}
                     {% endwith %}
                 </script>
-                <a href="#" onclick="return false;" class="add-file" data-formset-add>Добавить строку</a>
+                <a href="#" onclick="return false;" class="add-row" data-formset-add>Добавить строку</a>
             </div>
 
             <h4>Ожидаемые научные результаты</h4>

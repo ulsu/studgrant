@@ -312,7 +312,7 @@ div#addRow {position: absolute; padding-right: 13px; bottom: -30px; right:14px; 
 input[type="button"] {
 
 }
-.add-file {
+.add-file, .add-row {
     background: url("../img/plus.png") no-repeat scroll right center rgba(0, 0, 0, 0);
     color: #5F6264;
     font: 14px "segoe",sans-serif;

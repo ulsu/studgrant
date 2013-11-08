@@ -48,10 +48,12 @@
                     {% endfor %}
                     {% endif %}
 
+                    {% if a.report %}
                     <h4>Отзыв научного руководителя</h4>
                     <div class="file-links-back" style="word-wrap: break-word;">
                         <a href="{{ MEDIA_URL }}{{ a.report }}">{{ a.report.file.name|basename }}</a>
                     </div>
+                    {% endif %}
                 </td>
             </tr>
             {% endfor %}

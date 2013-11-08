@@ -1,6 +1,6 @@
 # Django settings for studgrant project.
 
-from local_settings import DATABASES, PROJECT_ROOT
+from local_settings import DATABASES, PROJECT_ROOT, EMAIL_FROM
 from private_settings import SECRET_KEY
 import os
 
