@@ -47,7 +47,7 @@ class AccountAdmin(admin.ModelAdmin):
     inlines = [PublicationInline, DiplomaInline, CoauthorInline, PlanInline]
 
     fieldsets = (
-        (None, {'fields': ('user',)}),
+        (None, {'fields': ('user','approved',)}),
         ('Студент', {'fields': ('user_fio', 'user_date', 'user_address', 'user_home_phone', 'user_mobile_phone', 'user_mail')}),
         ('Образование', {'fields': ('user_faculty', 'user_specialty', 'user_group', 'user_education_form', 'user_course')}),
         ('Научная деятельность', {'fields': ('science_area', 'project_support', 'research', 'publication_list', 'achivements')}),

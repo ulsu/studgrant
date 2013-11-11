@@ -21,7 +21,11 @@ def main(request):
     if request.user.is_secretary or request.user.is_superuser:
         return show_table(request)
     else:
-        return show_form(request)
+        if Account.objects.filter(user=request.user).exists() and\
+                        Account.objects.get(user=request.user).approved == True:
+            return show_approved_info(request)
+        else:
+            return show_form(request)
 
 
 def show_form(request):
@@ -84,3 +88,8 @@ def show_table(request):
     c = RequestContext(request, {'directions': directions})
     return HttpResponse(t.render(c))
 
+def show_approved_info(request):
+    account = get_object_or_404(Account, user=request.user.id)
+    t = loader.get_template("main/approved.html")
+    c = RequestContext(request, {'account': account})
+    return HttpResponse(t.render(c))

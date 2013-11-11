@@ -32,7 +32,6 @@
                 var counter = 1;
                 for (var i = 0; i < tr_list.length; i++){
                     var tr = $(tr_list[i]);
-                    console.log(tr.css('display'));
                     if (tr.css('display') != 'none'){
                         tr.children('td').eq(0).html(counter);
                         counter++;
@@ -48,6 +47,132 @@
             $('.add-row').on('click', function(){
                 render_table();
             });
+
+
+
+            $('.approve').on('click', function(){
+                var is_valid = validate();
+                if (is_valid){
+                    $('#id_approved').val(1);
+                    $('#forms-form').submit();
+                }
+                return false;
+            });
+
+            $('#save_form').on('click', function(){
+                $('#id_approved').val(0);
+            });
+
+            var inputs = $('input[type=text], textarea, select');
+
+            inputs.on('change', function(){
+                remove_error($(this));
+            });
+
+            inputs.on('keyup', function(){
+                remove_error($(this));
+            });
+
+            function remove_error(elem){
+                if(elem.hasClass('error')){
+                    elem.removeClass('error');
+                }
+            }
+
+            function validate(){
+                var i, j, has_full, has_empty;
+                var is_valid = true;
+                for (i = 0; i < inputs.length; i++){
+                    var inp = $(inputs[i]);
+                    if (inp.val() == ''){
+                        if (inp.hasClass('plan_field') || inp.hasClass('coauthor_field')){
+                            continue;
+                        }
+                        inp.addClass('error');
+                        is_valid = false;
+                    } else {
+                        remove_error(inp);
+                    }
+                }
+
+                var plan_rows = $('.plan_row');
+                for (i = 0; i < plan_rows.length; i++){
+                    var plan_row = $(plan_rows[i]);
+                    if (plan_row.css('display') == 'none') continue;
+
+
+                    var plan_fields = plan_row.children('td').children('textarea');
+                    has_full = false;
+                    has_empty = false;
+                    var plan_field;
+
+                    for (j = 0; j < plan_fields.length; j++){
+                        plan_field = $(plan_fields[j]);
+                        if (plan_field.val() == '') {
+                            has_full = true;
+                        } else {
+                            has_empty = true;
+                        }
+                    }
+
+                    if (has_empty && has_full){
+                        for (j = 0; j < plan_fields.length; j++){
+                            plan_field = $(plan_fields[j]);
+                            if (plan_field.val() == '') {
+                                plan_field.addClass('error');
+                                is_valid = false;
+                            } else {
+                                remove_error(plan_field);
+                            }
+                        }
+                    } else {
+                        for (j = 0; j < plan_fields.length; j++){
+                            plan_field = $(plan_fields[j]);
+                            remove_error(plan_field);
+                        }
+                    }
+                }
+
+                var coauthors = $('.coauthor_item');
+                for (i = 0; i < coauthors.length; i++){
+                    var coauthor = $(coauthors[i]);
+                    if (coauthor.css('display') == 'none') continue;
+
+                    var coauthor_fields = coauthor.find('textarea, input[type=text]');
+                    has_full = false;
+                    has_empty = false;
+                    var coauthor_field;
+
+                    for (j = 0; j < coauthor_fields.length; j++){
+                        coauthor_field = $(coauthor_fields[j]);
+                        if (!coauthor_field.val()) {
+                            has_full = true;
+                        } else {
+                            has_empty = true;
+                        }
+                    }
+
+                    if (has_empty && has_full){
+                        for (j = 0; j < coauthor_fields.length; j++){
+                            coauthor_field = $(coauthor_fields[j]);
+                            if (!coauthor_field.val()){
+                                coauthor_field.addClass('error');
+                                is_valid = false;
+                            } else {
+                                remove_error(coauthor_field);
+                            }
+                        }
+                    } else {
+                        for (j = 0; j < coauthor_fields.length; j++){
+                            coauthor_field = $(coauthor_fields[j]);
+                            remove_error(coauthor_field);
+                        }
+                    }
+                }
+                return is_valid;
+            }
+
+
         });
     </script>
 {% endblock %}
@@ -283,7 +408,15 @@
 
         </div>
     {% csrf_token %}
-    <button type="submit" formaction="/send/">Отправить</button>
+        <p style="color: #5F6264; font: 12px 'segoe',sans-serif;"><span style="color:red;">Внимание!</span> Для того, чтобы продолжить редактирование анкеты позже, воспользуйтесь кнопкой «Сохранить».</p>
+        <p style="color: #5F6264; font: 12px 'segoe',sans-serif;">Нажимая кнопку «Отправить», Вы передаете данные о своей заявке модератору и лишаетесь возможности в дальнейшем вносить в нее коррективы.</p>
+        <input id="confirmed" type="hidden" value="0" name="Forms[confirmed]">
+        <input id="files_to_delete" type="hidden" value="" name="del_files">
+        <div class="row buttons">
+            {{ account.approved }}
+            <input type="submit" value="Сохранить" name="yt0" id="save_form">
+            <button class="approve">Отправить</button>
+        </div>
     </form>
 
 {% endblock %}

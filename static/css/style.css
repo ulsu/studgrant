@@ -335,3 +335,12 @@ input[type="button"] {
     padding-right: 12px;
     font-weight: normal;
 }
+
+input[type=text].error, textarea.error, select.error{
+    border: 1px solid red !important;
+}
+
+td textarea.plan_field.error, textarea.plan_field.error{
+    background-color: #ffcdd4 !important;
+}
+

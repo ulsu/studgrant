@@ -10,6 +10,9 @@ class AccountForm(ModelForm):
     class Meta:
         model = Account
         exclude = ['user']
+        widgets = {
+            'approved': forms.HiddenInput()
+        }
 
     def __init__(self, *args, **kwargs):
         super(AccountForm, self).__init__(*args, **kwargs)
@@ -28,6 +31,13 @@ class PlanForm(ModelForm):
     class Meta:
         model = DetailedPlan
         exclude = ['account']
+
+    def __init__(self, *args, **kwargs):
+        super(PlanForm, self).__init__(*args, **kwargs)
+        for f in self.fields:
+            field = self.fields.get(f)
+            if type(field.widget) == forms.Textarea:
+                field.widget = forms.Textarea(attrs={'class': 'plan_field'})
 
 PlanFormSet = inlineformset_factory(Account, DetailedPlan, form=PlanForm, extra=1)
 
@@ -66,10 +76,10 @@ class CoauthorForm(ModelForm):
         for f in self.fields:
             field = self.fields.get(f)
             if type(field.widget) == forms.TextInput:
-                field.widget = forms.TextInput(attrs={'placeholder': field.label})
+                field.widget = forms.TextInput(attrs={'placeholder': field.label, 'class': 'coauthor_field'})
             if type(field.widget) == forms.DateInput:
-                field.widget = forms.DateInput(attrs={'placeholder': field.label, 'class': 'datepicker'})
+                field.widget = forms.DateInput(attrs={'placeholder': field.label, 'class': 'datepicker coauthor_field'})
             if type(field.widget) == forms.Textarea:
-                field.widget = forms.Textarea(attrs={'placeholder': field.label})
+                field.widget = forms.Textarea(attrs={'placeholder': field.label, 'class': 'coauthor_field'})
 
-CoauthorFormSet = inlineformset_factory(Account, Coauthor, form=CoauthorForm, extra=1)
+CoauthorFormSet = inlineformset_factory(Account, Coauthor, form=CoauthorForm, extra=0)

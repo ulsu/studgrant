@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib import admin
+from managers import *
+
 
 class Direction(models.Model):
     title = models.CharField(max_length=255, verbose_name="Название", blank=True, null=True)
@@ -14,7 +16,8 @@ class Direction(models.Model):
 
 
 class Account(models.Model):
-    user = models.ForeignKey('accounts.User', verbose_name='Пользователь')
+    user = models.ForeignKey('accounts.User', verbose_name='Пользователь', related_name='account')
+    approved = models.BooleanField(default=False)
     user_fio = models.CharField(max_length=255, verbose_name='ФИО', blank=True, null=True)
     user_date = models.DateField(verbose_name='Дата рождения', blank=True, null=True)
     user_address = models.CharField(max_length=255, verbose_name='Почтовый адрес', blank=True, null=True)
@@ -54,6 +57,7 @@ class Account(models.Model):
     goals_and_objectives = models.TextField(verbose_name="Цели и задачи реализации проекта", blank=True, null=True)
     proposed_methods = models.TextField(verbose_name="Предлагаемые методы и подходы (с оценкой степени новизны)", blank=True, null=True)
     scientific_results = models.TextField(verbose_name="Ожидаемые научные результаты", help_text="Форма изложения должна дать возможность провести экспертизу результатов", blank=True, null=True)
+    objects = AccountManager()
 
     def admin_direction(self):
         return self.direction
