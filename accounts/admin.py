@@ -33,7 +33,7 @@ where `first_name` and `last_name` are replaced by `full_name` and
     change_user_password_template = None
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
-        (_('Personal info'), {'fields': ('full_name', 'short_name', 'email')}),
+        (_('Personal info'), {'fields': ('email')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'is_secretary', 'directions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
@@ -46,9 +46,9 @@ where `first_name` and `last_name` are replaced by `full_name` and
     form = CustomUserChangeForm
     add_form = CustomUserCreationForm
     change_password_form = AdminPasswordChangeForm
-    list_display = ('username', 'email', 'full_name', 'short_name', 'is_staff')
+    list_display = ('username', 'email', 'is_staff')
     list_filter = ('is_superuser', 'is_secretary', 'groups')
-    search_fields = ('username', 'full_name', 'short_name', 'email')
+    search_fields = ('username', 'email')
     ordering = ('username',)
     filter_horizontal = ('groups', 'user_permissions', 'directions')
 
