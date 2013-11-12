@@ -46,12 +46,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         return "/users/%s/" % urlquote(self.username)
 
     def get_full_name(self):
-        full_name = self.full_name
-        return full_name.strip()
+        username = self.username
+        return username.strip()
 
     def get_short_name(self):
         "Returns the short name for the user."
-        return self.short_name.strip()
+        return self.username.strip()
 
     def email_user(self, subject, message, from_email=None):
         send_mail(subject, message, from_email, [self.email])
