@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from studgrant.settings import EMAIL_FROM
 
+
 def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -35,6 +36,7 @@ def logout(request):
         auth.logout(request)
     return HttpResponseRedirect('/')
 
+
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -45,12 +47,12 @@ def register(request):
             user.save()
 
             subject = u'Регистрация на сайте studgrant.ulsu.ru'
-            # user.email_user(subject, loader.render_to_string('accounts/register_mail.html', {
-            #     'user':user,
-            #     'password':password,
-            # }), EMAIL_FROM)
+            user.email_user(subject, loader.render_to_string('accounts/register_mail.html', {
+                'user': user,
+                'password': password,
+            }), EMAIL_FROM)
 
-            return render(request, 'accounts/register_success.html', {'user': user, 'password':password})
+            return render(request, 'accounts/register_success.html', {'user': user, 'password': password})
     else:
         if request.user.is_authenticated():
             return HttpResponseRedirect('/')
