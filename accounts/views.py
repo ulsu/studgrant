@@ -7,6 +7,9 @@ from forms import *
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from studgrant.settings import EMAIL_FROM
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 
 def login(request):
@@ -37,6 +40,17 @@ def logout(request):
     return HttpResponseRedirect('/')
 
 
+def send_register_email(user, password):
+    subject, from_email, to = u'Регистрация на сайте studgrant.ulsu.ru', EMAIL_FROM, [user.email]
+
+    html_content = render_to_string('accounts/register_mail.html', {'user': user, 'password': password})
+    text_content = strip_tags(html_content)
+
+    msg = EmailMultiAlternatives(subject, text_content, from_email, to)
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
+
+
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -46,12 +60,7 @@ def register(request):
             user.set_password(password)
             user.save()
 
-            subject = u'Регистрация на сайте studgrant.ulsu.ru'
-            user.email_user(subject, loader.render_to_string('accounts/register_mail.html', {
-                'user': user,
-                'password': password,
-            }), EMAIL_FROM)
-
+            send_register_email(user, password)
             return render(request, 'accounts/register_success.html', {'user': user})
     else:
         if request.user.is_authenticated():
