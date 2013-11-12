@@ -4,5 +4,5 @@ studgrant/private_settings.py
 *.pyc
 .idea
 media
-static
 deploy
+static
