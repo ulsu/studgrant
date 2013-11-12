@@ -98,7 +98,7 @@ ROOT_URLCONF = 'studgrant.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'studgrant.wsgi.application'
 
-TEMPLATE_DIRS = TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, 'templates/'),)
+TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, 'templates/'),)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
