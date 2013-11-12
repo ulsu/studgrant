@@ -52,7 +52,7 @@ def register(request):
                 'password': password,
             }), EMAIL_FROM)
 
-            return render(request, 'accounts/register_success.html', {'user': user, 'password': password})
+            return render(request, 'accounts/register_success.html', {'user': user})
     else:
         if request.user.is_authenticated():
             return HttpResponseRedirect('/')
