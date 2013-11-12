@@ -18,8 +18,6 @@ class User(AbstractBaseUser, PermissionsMixin):
                                 validators=[
                                     validators.RegexValidator(re.compile('^[\w.@+-]+$'), _('Enter a valid username.'), 'invalid')
                                 ])
-    full_name = models.CharField(_('full name'), max_length=254, blank=True)
-    short_name = models.CharField(_('short name'), max_length=30, blank=True)
     email = models.EmailField(_('email address'), max_length=254, blank=True)
     is_staff = models.BooleanField('Статус администратора', default=False,
                                     help_text=_('Designates whether the user can log into this admin '
