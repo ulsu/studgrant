@@ -1,8 +1,8 @@
-# Django settings for studgrant project.
-
 from local_settings import DATABASES, PROJECT_ROOT, EMAIL_FROM
 from private_settings import SECRET_KEY
 import os
+import sys
+sys.path.append(PROJECT_ROOT)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -98,7 +98,7 @@ ROOT_URLCONF = 'studgrant.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'studgrant.wsgi.application'
 
-TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), '..', 'templates').replace('\\','/'),)
+TEMPLATE_DIRS = TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, 'templates/'),)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
