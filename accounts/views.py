@@ -56,12 +56,20 @@ def register(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             password = User.objects.make_random_password()
-            user = User.objects.create(username=form.cleaned_data['username'], email=form.cleaned_data['username'])
+            try:
+                user = User.objects.create(username=form.cleaned_data['username'], email=form.cleaned_data['username'])
+            except:
+                return render(request, 'accounts/register.html', {
+                    'form': form,
+                    'next': request.GET['next'] if 'next' in request.GET else '/',
+                    'error': True,
+                    })
             user.set_password(password)
             user.save()
 
             send_register_email(user, password)
             return render(request, 'accounts/register_success.html', {'user': user})
+
     else:
         if request.user.is_authenticated():
             return HttpResponseRedirect('/')
