@@ -1,10 +1,9 @@
-from local_settings import DATABASES, PROJECT_ROOT, EMAIL_FROM
+from local_settings import DATABASES, PROJECT_ROOT, EMAIL_FROM, DEBUG
 from private_settings import SECRET_KEY
 import os
 import sys
 sys.path.append(PROJECT_ROOT)
 
-DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
