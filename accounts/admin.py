@@ -34,7 +34,7 @@ where `first_name` and `last_name` are replaced by `full_name` and
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         (_('Personal info'), {'fields': ('email',)}),
-        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'is_secretary', 'directions')}),
+        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'is_secretary', 'can_edit', 'directions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
     add_fieldsets = (

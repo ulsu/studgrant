@@ -27,6 +27,8 @@ class User(AbstractBaseUser, PermissionsMixin):
                                                 'active. Unselect this instead of deleting accounts.'))
     is_secretary = models.BooleanField('Статус персонала', default=False,
                                     help_text='Отметьте, если пользователь обладает модераторскими правами.')
+    can_edit = models.BooleanField('Статус редактора', default=False,
+                                    help_text='Отметьте, если пользователь может редактировать анкеты студентов.')
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     directions = models.ManyToManyField(Direction, blank=True, verbose_name='Направления')
 

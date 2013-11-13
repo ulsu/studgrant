@@ -41,7 +41,7 @@ def edit_form(request, id):
 
     if request.user.is_superuser:
         return load_form(request, account)
-    elif request.user.is_secretary:
+    elif request.user.is_secretary and request.user.can_edit:
         if request.user.directions.filter(pk=account.direction_id).count():
             return load_form(request, account)
         else:
@@ -70,7 +70,8 @@ def load_form(request, account):
 
 def save(request):
     if request.method == 'POST':
-        if 'account_id' in request.POST and (request.user.is_superuser or request.user.is_secretary):
+        if 'account_id' in request.POST and \
+                (request.user.is_superuser or request.user.is_secretary and request.user.can_edit):
             account = Account.objects.get(pk=int(request.POST['account_id']))
             if not request.user.is_superuser and not request.user.directions.filter(pk=account.direction_id).count():
                 account, created = Account.objects.get_or_create(user=request.user)
