@@ -409,11 +409,10 @@
     {% csrf_token %}
         <p style="color: #5F6264; font: 12px 'segoe',sans-serif;"><span style="color:red;">Внимание!</span> Для того, чтобы продолжить редактирование анкеты позже, воспользуйтесь кнопкой «Сохранить».</p>
         <p style="color: #5F6264; font: 12px 'segoe',sans-serif;">Нажимая кнопку «Отправить», Вы передаете данные о своей заявке модератору и лишаетесь возможности в дальнейшем вносить в нее коррективы.</p>
-        <input id="confirmed" type="hidden" value="0" name="Forms[confirmed]">
-        <input id="files_to_delete" type="hidden" value="" name="del_files">
+        {% if user.is_superuser or user.is_secretary %}<input type="hidden" name="account_id" value="{{ account.instance.pk }}" />{% endif %}
         <div class="row buttons">
             {{ account.approved }}
-            <input type="submit" value="Сохранить" name="yt0" id="save_form">
+            {% if not user.is_superuser and not user.is_secretary %}<input type="submit" value="Сохранить" name="yt0" id="save_form">{% endif %}
             <button class="approve">Отправить</button>
         </div>
     </form>

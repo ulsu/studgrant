@@ -22,7 +22,7 @@
                 <tr>
                     <td style="text-align: center;">{{ forloop.counter }}</td>
                     <td>
-                        <div style="margin-bottom:10px;"><strong>{{ a.user_fio }}</strong></div>
+                        <div style="margin-bottom:10px;"><strong><a href="/edit/{{ a.id }}/">{{ a.user_fio }}</a></strong></div>
                         <div style="margin-bottom:10px;">{{ a.user_faculty }}</div>
                         <div style="margin-bottom:10px;">{{ a.user_specialty }}</div>
                         <div style="margin-bottom:10px;">{{ a.user_group }}</div>

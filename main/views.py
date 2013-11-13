@@ -9,6 +9,7 @@ from django.views.static import serve
 from studgrant import settings
 from django.shortcuts import get_object_or_404
 from pdf_generator.views import generate_pdf
+from django.http import Http404
 
 
 def mediaserver(request, path):
@@ -21,7 +22,7 @@ def main(request):
     if request.user.is_secretary or request.user.is_superuser:
         return show_table(request)
     else:
-        if Account.objects.filter(user=request.user).exists() and\
+        if Account.objects.filter(user=request.user).exists() and \
                         Account.objects.get(user=request.user).approved == True:
             return show_approved_info(request)
         else:
@@ -30,6 +31,25 @@ def main(request):
 
 def show_form(request):
     account, created = Account.objects.get_or_create(user=request.user)
+    return load_form(request, account)
+
+def edit_form(request, id):
+    try:
+        account = Account.objects.get(pk=id)
+    except Account.DoesNotExist:
+        raise Http404
+
+    if request.user.is_superuser:
+        return load_form(request, account)
+    elif request.user.is_secretary:
+        if request.user.directions.filter(pk=account.direction_id).count():
+            return load_form(request, account)
+        else:
+            raise Http404
+    else:
+        raise Http404
+
+def load_form(request, account):
     form = AccountForm(instance=account)
     plan_formset = PlanFormSet(instance=account)
     pub_formset = PubFormSet(instance=account)
@@ -47,9 +67,18 @@ def show_form(request):
     return HttpResponse(t.render(c))
 
 
+
 def save(request):
     if request.method == 'POST':
-        account, created = Account.objects.get_or_create(user=request.user)
+        if 'account_id' in request.POST and (request.user.is_superuser or request.user.is_secretary):
+            account = Account.objects.get(pk=int(request.POST['account_id']))
+            if not request.user.is_superuser and not request.user.directions.filter(pk=account.direction_id).count():
+                account, created = Account.objects.get_or_create(user=request.user)
+        else:
+            account, created = Account.objects.get_or_create(user=request.user)
+
+
+
         account_form = AccountForm(request.POST, request.FILES, instance=account)
         if account_form.is_valid():
             account = account_form.save()
@@ -92,4 +121,10 @@ def show_approved_info(request):
     account = get_object_or_404(Account, user=request.user.id)
     t = loader.get_template("main/approved.html")
     c = RequestContext(request, {'account': account})
+    return HttpResponse(t.render(c))
+
+
+def log(request, var):
+    t = loader.get_template("log.html")
+    c = RequestContext(request, {'var': var})
     return HttpResponse(t.render(c))
