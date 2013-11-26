@@ -110,7 +110,7 @@ class DetailedPlan(models.Model):
     place = models.TextField(verbose_name="Место проведения", blank=True, null=True)
 
     def __unicode__(self):
-        return self.fio
+        return self.account.user_fio
 
     class Meta:
         verbose_name = 'этап'
