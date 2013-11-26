@@ -295,7 +295,7 @@ div#addRow {position: absolute; padding-right: 13px; bottom: -30px; right:14px; 
 
 
 .file-links h4{
-	margin: 0 0 7px 0px;
+	margin: 0 0 7px 0;
 }
 
 .file-links-back {
@@ -313,7 +313,7 @@ input[type="button"] {
 
 }
 .add-file, .add-row {
-    background: url("../img/plus.png") no-repeat scroll right center rgba(0, 0, 0, 0);
+    background: url("../img/plus.png") no-repeat right center;
     color: #5F6264;
     font: 14px "segoe",sans-serif;
     text-decoration: none;
@@ -322,14 +322,14 @@ input[type="button"] {
 }
 
 .data-formset-delete-button {
-    background: url("../img/fileDel.png") no-repeat scroll right center rgba(0, 0, 0, 0);
+    background: url("../img/fileDel.png") no-repeat right center;
     display: block;
     width: 10px;
     height: 10px;
     margin: 0 auto;
 }
 .data-formset-delete-coauthor {
-    background: url("../img/fileDel.png") no-repeat scroll right center rgba(0, 0, 0, 0);
+    background: url("../img/fileDel.png") no-repeat right center;
     color: #5F6264;
     font: 14px "segoe",sans-serif;
     padding-right: 12px;
